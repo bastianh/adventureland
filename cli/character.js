@@ -2,11 +2,11 @@ var { workerData, parentPort } = require('worker_threads');
 if(!workerData) // for chrome://inspect with "node --expose-gc --inspect character.js"
 {
 	workerData={
-		"name":"Wizard",
-		"region":"EU",
-		"server":"I",
-		"code":"cli_tests",
-		"auth":"5818821692620800-gjxqztPovvpiaKTGnjEtT",
+		"name":process.env.CHARACTER,
+		"region":process.env.REGION || "EU",
+		"server":process.env.SERVER || "I",
+		"code":process.env.CODE,
+		"auth":	process.env.AUTH,
 	};
 	parentPort={postMessage:function(){},on:function(){}};
 

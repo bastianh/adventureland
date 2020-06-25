@@ -5,25 +5,20 @@ const { Worker, SHARE_ENV } = require('worker_threads');
 // for global.gc();
 var G=null;
 var fs=require("fs");
-eval(""+fs.readFileSync("../../js/common_functions.js")); // Manually copy/paste common_functions.js from libraries/ to this directory
+eval(""+fs.readFileSync("../common_functions.js")); // Manually copy/paste common_functions.js from libraries/ to this directory
 eval(""+fs.readFileSync("functions.js"));
 
-var auth="5818821692620800-gjxqztPovvpiaKTGnjEtT"; // show_json(parent.Cookies.get("auth"))
-var characters=[
-	{
-		"name":"GG",
-		"region":"EU",
-		"server":"I",
-		"code":"local_cm_receiver",
-	},
-	{
-		"name":"MERC",
-		"region":"EU",
-		"server":"I",
-		"code":"local_cm_sender",
-	},
-];
+var auth=process.env.AUTH; // show_json(parent.Cookies.get("auth"))
 
+var characters = (process.env.CHARACTER).split(",");
+characters = characters.map((n) => {
+	return {
+		"name":n,
+		"region":process.env.REGION || "EU",
+		"server":process.env.SERVER || "I",
+		"code":process.env.CODE || "CLI",		
+	}
+})
 function run_character(workerData)
 {
 	console.log(workerData);
